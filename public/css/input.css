@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme {
+  --color-floral-green: #1D3A1E;
+  --color-floral-green-mid: #2F5C31;
+  --color-floral-green-light: #E8EDE8;
+  --color-floral-gold: #C9965A;
+  --color-floral-rose: #B55C52;
+  --color-floral-rose-light: #F5E9E7;
+  --color-floral-bg: #FAF8F4;
+  --color-floral-bg-alt: #F0EBE3;
+  --color-floral-border: #DED8CF;
+  --color-floral-text: #1A1A17;
+  --color-floral-text-secondary: #5C5C56;
+  --color-floral-text-muted: #9A9A92;
+  --color-floral-white: #FFFFFF;
+}
+
+body {
+  font-family: 'Funnel Sans', sans-serif;
+  background-color: var(--color-floral-bg);
+  color: var(--color-floral-text);
+}
+
+.font-display {
+  font-family: 'Playfair Display', serif;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.order-card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.order-card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.08);
+}

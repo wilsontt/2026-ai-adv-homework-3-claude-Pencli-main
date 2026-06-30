@@ -1,0 +1,32 @@
+<header class="sticky top-0 w-full z-50 bg-white border-b border-floral-border">
+  <div class="flex justify-between items-center h-[72px] px-6 md:px-16 max-w-[1440px] mx-auto">
+
+    <!-- Logo -->
+    <a href="/" class="flex flex-col leading-none gap-0.5">
+      <span class="text-[9px] font-medium text-floral-text-muted tracking-[2.5px] uppercase">FLORAL STUDIO</span>
+      <span class="text-[22px] font-bold text-floral-green font-display leading-none">花漾生活</span>
+    </a>
+
+    <!-- Nav -->
+    <nav class="hidden md:flex items-center gap-10 text-[14px] text-floral-text-secondary">
+      <a href="/" class="hover:text-floral-green transition-colors">首頁</a>
+      <a id="orders-link" href="/orders" class="hover:text-floral-green transition-colors hidden">我的訂單</a>
+    </nav>
+
+    <!-- Right -->
+    <div class="flex items-center gap-6">
+      <div id="auth-nav" class="flex items-center gap-5 text-[14px] text-floral-text-secondary">
+        <a href="/login" class="hover:text-floral-green transition-colors">登入</a>
+      </div>
+      <a href="/cart" class="relative flex items-center gap-1.5 bg-floral-green text-white px-4 py-2 rounded text-[13px] font-medium hover:bg-floral-green-mid transition-colors">
+        <span class="material-symbols-outlined text-[16px] leading-none">shopping_bag</span>
+        <span>購物車</span>
+        <span
+          id="cart-badge"
+          class="hidden absolute -top-1.5 -right-1.5 bg-floral-gold text-white text-[10px] font-bold h-4 w-4 rounded-full items-center justify-center"
+        ></span>
+      </a>
+    </div>
+
+  </div>
+</header>

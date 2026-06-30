@@ -1,0 +1,133 @@
+<div id="app">
+  <div class="min-h-[70vh] flex items-center justify-center py-10">
+    <section class="bg-white w-full max-w-[420px] border border-floral-border rounded-lg p-8 shadow-sm">
+
+      <!-- Brand -->
+      <div class="text-center mb-8">
+        <h1 class="font-display text-[28px] font-bold text-floral-green">花漾生活</h1>
+        <p class="text-floral-text-muted text-sm mt-1.5">讓每一刻綻放優雅</p>
+      </div>
+
+      <!-- Tab -->
+      <div class="flex border-b border-floral-border mb-8">
+        <button
+          @click="activeTab = 'login'; errors = {}"
+          class="flex-1 pb-3.5 text-sm font-medium transition-all border-b-2 -mb-px"
+          :class="activeTab === 'login' ? 'border-floral-green text-floral-green' : 'border-transparent text-floral-text-muted hover:text-floral-text-secondary'"
+        >
+          登入
+        </button>
+        <button
+          @click="activeTab = 'register'; errors = {}"
+          class="flex-1 pb-3.5 text-sm font-medium transition-all border-b-2 -mb-px"
+          :class="activeTab === 'register' ? 'border-floral-green text-floral-green' : 'border-transparent text-floral-text-muted hover:text-floral-text-secondary'"
+        >
+          註冊
+        </button>
+      </div>
+
+      <!-- Login Form -->
+      <form v-if="activeTab === 'login'" @submit.prevent="handleLogin" class="flex flex-col gap-5">
+        <div>
+          <label class="block text-xs font-semibold text-floral-text-secondary mb-2 tracking-wider uppercase">電子郵件</label>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-floral-text-muted pointer-events-none" style="font-size:18px;">mail</span>
+            <input
+              v-model="loginForm.email"
+              type="email"
+              placeholder="example@floralife.com"
+              class="w-full pl-10 pr-4 py-3 border text-sm outline-none transition-colors placeholder:text-floral-text-muted text-floral-text focus:border-floral-green"
+              :class="errors.email ? 'border-floral-rose' : 'border-floral-border'"
+            />
+          </div>
+          <p v-if="errors.email" class="text-floral-rose text-xs mt-1">{{ errors.email }}</p>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-floral-text-secondary mb-2 tracking-wider uppercase">密碼</label>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-floral-text-muted pointer-events-none" style="font-size:18px;">lock</span>
+            <input
+              v-model="loginForm.password"
+              type="password"
+              placeholder="••••••••"
+              class="w-full pl-10 pr-4 py-3 border text-sm outline-none transition-colors placeholder:text-floral-text-muted text-floral-text focus:border-floral-green"
+              :class="errors.password ? 'border-floral-rose' : 'border-floral-border'"
+            />
+          </div>
+          <p v-if="errors.password" class="text-floral-rose text-xs mt-1">{{ errors.password }}</p>
+        </div>
+        <p v-if="errors.general" class="text-floral-rose text-xs text-center">{{ errors.general }}</p>
+        <button
+          type="submit"
+          :disabled="submitting"
+          class="w-full py-3.5 bg-floral-green text-white rounded font-semibold hover:bg-floral-green-mid transition-colors mt-1 disabled:opacity-50"
+        >
+          {{ submitting ? '登入中...' : '登入' }}
+        </button>
+        <p class="text-center text-sm text-floral-text-secondary">
+          沒有帳號？
+          <button type="button" @click="activeTab = 'register'; errors = {}" class="text-floral-green font-semibold hover:underline">立即註冊</button>
+        </p>
+      </form>
+
+      <!-- Register Form -->
+      <form v-else @submit.prevent="handleRegister" class="flex flex-col gap-5">
+        <div>
+          <label class="block text-xs font-semibold text-floral-text-secondary mb-2 tracking-wider uppercase">姓名</label>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-floral-text-muted pointer-events-none" style="font-size:18px;">person</span>
+            <input
+              v-model="registerForm.name"
+              type="text"
+              placeholder="請輸入您的姓名"
+              class="w-full pl-10 pr-4 py-3 border text-sm outline-none transition-colors placeholder:text-floral-text-muted text-floral-text focus:border-floral-green"
+              :class="errors.name ? 'border-floral-rose' : 'border-floral-border'"
+            />
+          </div>
+          <p v-if="errors.name" class="text-floral-rose text-xs mt-1">{{ errors.name }}</p>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-floral-text-secondary mb-2 tracking-wider uppercase">電子郵件</label>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-floral-text-muted pointer-events-none" style="font-size:18px;">mail</span>
+            <input
+              v-model="registerForm.email"
+              type="email"
+              placeholder="example@floralife.com"
+              class="w-full pl-10 pr-4 py-3 border text-sm outline-none transition-colors placeholder:text-floral-text-muted text-floral-text focus:border-floral-green"
+              :class="errors.email ? 'border-floral-rose' : 'border-floral-border'"
+            />
+          </div>
+          <p v-if="errors.email" class="text-floral-rose text-xs mt-1">{{ errors.email }}</p>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-floral-text-secondary mb-2 tracking-wider uppercase">密碼（至少 6 字元）</label>
+          <div class="relative">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-floral-text-muted pointer-events-none" style="font-size:18px;">lock</span>
+            <input
+              v-model="registerForm.password"
+              type="password"
+              placeholder="••••••••"
+              class="w-full pl-10 pr-4 py-3 border text-sm outline-none transition-colors placeholder:text-floral-text-muted text-floral-text focus:border-floral-green"
+              :class="errors.password ? 'border-floral-rose' : 'border-floral-border'"
+            />
+          </div>
+          <p v-if="errors.password" class="text-floral-rose text-xs mt-1">{{ errors.password }}</p>
+        </div>
+        <p v-if="errors.general" class="text-floral-rose text-xs text-center">{{ errors.general }}</p>
+        <button
+          type="submit"
+          :disabled="submitting"
+          class="w-full py-3.5 bg-floral-green text-white rounded font-semibold hover:bg-floral-green-mid transition-colors mt-1 disabled:opacity-50"
+        >
+          {{ submitting ? '註冊中...' : '立即註冊' }}
+        </button>
+        <p class="text-center text-sm text-floral-text-secondary">
+          已有帳號？
+          <button type="button" @click="activeTab = 'login'; errors = {}" class="text-floral-green font-semibold hover:underline">返回登入</button>
+        </p>
+      </form>
+
+    </section>
+  </div>
+</div>
