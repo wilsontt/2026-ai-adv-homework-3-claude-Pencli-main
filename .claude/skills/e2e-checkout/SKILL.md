@@ -130,7 +130,7 @@ export default defineConfig({
 7. **選擇台灣土地銀行**：找到可見的 `select` → `selectOption({ label: /土地/ })`
 8. **點擊前往付款**：`page.evaluate()` 找到文字含「前往付款」的元素並 `.click()`
 9. **Staging 測試付款**：若出現「測試付款請點此」按鈕，點擊並等待頁面更新
-10. **截圖**：各關鍵步驟截圖儲存至 `e2e/screenshot-*.png`
+10. **截圖**：從登入到加入購物車，然後結帳付款，每個各關鍵步驟截圖儲存至 `e2e/screenshot-*.png`
 
 ### 帳號資訊
 
