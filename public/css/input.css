@@ -1,29 +1,31 @@
 @import "tailwindcss";
 
 @theme {
-  --color-floral-green: #1D3A1E;
-  --color-floral-green-mid: #2F5C31;
-  --color-floral-green-light: #E8EDE8;
-  --color-floral-gold: #C9965A;
-  --color-floral-rose: #B55C52;
-  --color-floral-rose-light: #F5E9E7;
-  --color-floral-bg: #FAF8F4;
-  --color-floral-bg-alt: #F0EBE3;
-  --color-floral-border: #DED8CF;
-  --color-floral-text: #1A1A17;
-  --color-floral-text-secondary: #5C5C56;
-  --color-floral-text-muted: #9A9A92;
-  --color-floral-white: #FFFFFF;
+  --color-paper: #F2EDE1;
+  --color-paper-deep: #E4DCC8;
+  --color-ink: #23261D;
+  --color-ink-soft: #5B5D4E;
+  --color-moss: #445540;
+  --color-stamp: #C1442C;
+  --color-gold-thread: #B98B2E;
 }
 
 body {
-  font-family: 'Funnel Sans', sans-serif;
-  background-color: var(--color-floral-bg);
-  color: var(--color-floral-text);
+  font-family: 'Noto Sans TC', sans-serif;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
 }
 
 .font-display {
-  font-family: 'Playfair Display', serif;
+  font-family: 'Fraunces', serif;
+}
+
+.font-serif-tc {
+  font-family: 'Noto Serif TC', serif;
+}
+
+.font-mono-ledger {
+  font-family: 'JetBrains Mono', monospace;
 }
 
 .material-symbols-outlined {
@@ -33,10 +35,110 @@ body {
   line-height: 1;
 }
 
-.order-card-hover {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.order-card-hover:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px -5px rgba(0,0,0,0.08);
+@layer components {
+  /* 印章式主要按鈕 */
+  .stamp-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background-color: var(--color-stamp);
+    color: #FFFFFF;
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 700;
+    font-size: 0.9375rem;
+    padding: 0.875rem 1.75rem;
+    border-radius: 4px;
+    box-shadow: 0 1px 2px rgba(35, 38, 29, 0.08);
+    transition: opacity 0.2s ease;
+  }
+  .stamp-btn:hover:not(:disabled) {
+    opacity: 0.9;
+  }
+  .stamp-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  /* 狀態戳章：顏色由行內 style/class 決定（gold-thread=待付款／moss=已付款／stamp=失敗售完） */
+  .status-stamp {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    padding: 0.375rem 1rem;
+    border-radius: 4px;
+    border: 1.5px solid currentColor;
+  }
+
+  /* 苗圃吊牌：商品卡外框 + 撕線圓孔 */
+  .tag-card {
+    background-color: var(--color-paper-deep);
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(35, 38, 29, 0.08);
+  }
+  .tag-card__tear {
+    position: relative;
+    height: 1px;
+    margin: 10px 16px 0;
+    border-top: 1px dashed var(--color-ink-soft);
+  }
+  .tag-card__tear::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--color-paper);
+  }
+
+  /* 市集收據：虛線分隔 */
+  .receipt-divider {
+    border-top: 2px dashed var(--color-ink-soft);
+  }
+
+  /* 票根樣式表單卡：騎縫章缺口。預設用於 paper 底色頁面（結帳／訂單詳情），
+     --ticket-card--on-deep 用於 paper-deep 底色頁面（登入頁），兩者卡片色與缺口色互換以維持對比 */
+  .ticket-card {
+    position: relative;
+    background-color: var(--color-paper-deep);
+    border-radius: 6px;
+    box-shadow: 0 1px 2px rgba(35, 38, 29, 0.08);
+    --ticket-notch-color: var(--color-paper);
+  }
+  .ticket-card--on-deep {
+    background-color: var(--color-paper);
+    --ticket-notch-color: var(--color-paper-deep);
+  }
+  .ticket-card::before,
+  .ticket-card::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: var(--ticket-notch-color);
+    transform: translateY(-50%);
+  }
+  .ticket-card::before {
+    left: -10px;
+  }
+  .ticket-card::after {
+    right: -10px;
+  }
+  /* 訂單列表列 hover：輕量色調，不用位移/陰影 */
+  .order-card-hover {
+    transition: background-color 0.2s ease;
+  }
+  .order-card-hover:hover {
+    background-color: var(--color-paper);
+  }
 }

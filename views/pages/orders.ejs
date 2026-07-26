@@ -1,67 +1,38 @@
 <div id="app">
-  <div class="flex items-end gap-4 mb-10">
-    <h1 class="font-display text-[40px] font-bold text-floral-text">我的訂單</h1>
-    <p class="text-floral-text-muted pb-1 text-sm">My Order History</p>
-  </div>
+  <h1 class="font-serif-tc text-[32px] font-bold text-ink mb-8">我的訂單</h1>
 
   <div v-if="loading" class="flex justify-center py-16">
-    <div class="w-8 h-8 border-4 border-floral-green border-t-transparent rounded-full animate-spin"></div>
+    <div class="w-8 h-8 border-4 border-moss border-t-transparent rounded-full animate-spin"></div>
   </div>
 
-  <div v-else-if="orders.length === 0" class="text-center py-20">
-    <p class="text-6xl mb-4">📦</p>
-    <p class="text-floral-text-secondary mb-1 font-medium text-lg">尚無訂單</p>
-    <p class="text-floral-text-muted text-sm mb-8">快去選購喜歡的花束吧！</p>
-    <a href="/" class="inline-block bg-floral-green text-white px-10 py-3.5 rounded font-medium hover:bg-floral-green-mid transition-colors">去逛逛</a>
-  </div>
+  <template v-if="!loading && orders.length === 0">
+    <%- include('../partials/empty-state', { icon: '📦', title: '尚無訂單', description: '快去選購喜歡的花束吧！' }) %>
+  </template>
 
-  <div v-else class="flex flex-col gap-3">
+  <div v-if="!loading && orders.length > 0" class="flex flex-col gap-3">
     <a
       v-for="order in orders"
       :key="order.id"
       :href="'/orders/' + order.id"
-      class="bg-white rounded-lg border border-floral-border p-6 flex flex-col md:flex-row justify-between items-center order-card-hover transition-all duration-300 hover:border-floral-green/40"
+      class="bg-paper-deep p-5 flex flex-col md:flex-row justify-between items-center gap-3 order-card-hover transition-colors"
     >
-      <div class="flex flex-col gap-1.5 w-full md:w-auto mb-4 md:mb-0">
-        <span class="text-[11px] font-semibold tracking-wider text-floral-text-muted uppercase">訂單編號</span>
-        <span class="text-floral-text font-medium text-[17px]">{{ order.order_no }}</span>
-        <div class="flex items-center gap-2 text-floral-text-secondary text-sm mt-0.5">
-          <span class="material-symbols-outlined" style="font-size:14px;">calendar_today</span>
-          <span>{{ new Date(order.created_at).toLocaleDateString('zh-TW') }}</span>
-        </div>
+      <div class="flex flex-col gap-1 w-full md:w-auto">
+        <span class="font-mono-ledger text-ink text-[15px]">{{ order.order_no }}</span>
+        <span class="text-ink-soft text-sm">{{ new Date(order.created_at).toLocaleDateString('zh-TW') }}</span>
       </div>
-      <div class="flex items-center justify-between w-full md:w-auto md:gap-10">
-        <div>
-          <p class="text-xs text-floral-text-muted mb-1">訂單總額</p>
-          <p class="text-[20px] font-bold text-floral-green">NT$ {{ order.total_amount.toLocaleString() }}</p>
-        </div>
-        <div class="flex items-center gap-3 ml-4">
-          <span
-            class="px-3 py-1 rounded text-xs font-semibold"
-            :class="{
-              'bg-floral-gold/15 text-floral-gold': order.status === 'pending',
-              'bg-floral-green-light text-floral-green': order.status === 'paid',
-              'bg-red-100 text-red-500': order.status === 'failed'
-            }"
-          >
-            {{ statusMap[order.status]?.label || order.status }}
-          </span>
-          <span class="material-symbols-outlined text-floral-text-muted" style="font-size:18px;">chevron_right</span>
-        </div>
+      <div class="flex items-center gap-4 w-full md:w-auto justify-between md:justify-end">
+        <span class="font-mono-ledger font-bold text-ink text-[17px]">NT$ {{ order.total_amount.toLocaleString() }}</span>
+        <span
+          class="status-stamp"
+          :class="{
+            'text-gold-thread': order.status === 'pending',
+            'text-moss': order.status === 'paid',
+            'text-stamp': order.status === 'failed'
+          }"
+        >
+          {{ statusMap[order.status]?.label || order.status }}
+        </span>
       </div>
     </a>
-  </div>
-
-  <!-- Brand Banner -->
-  <div v-if="orders.length > 0" class="mt-16 relative overflow-hidden rounded-lg bg-floral-bg-alt h-44 flex items-center px-10">
-    <div class="relative z-10 max-w-md">
-      <h3 class="font-display text-[22px] font-bold text-floral-text mb-2">專屬您的花漾時刻</h3>
-      <p class="text-floral-text-secondary text-sm leading-relaxed">每一束花都是我們用心的承諾。如有任何訂單疑問，歡迎隨時聯絡。</p>
-    </div>
-    <img
-      src="https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=400"
-      alt="花卉裝飾"
-      class="absolute right-0 top-0 h-full w-1/2 object-cover opacity-40 mix-blend-multiply"
-    />
   </div>
 </div>

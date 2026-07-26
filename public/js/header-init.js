@@ -8,13 +8,13 @@ document.addEventListener('DOMContentLoaded', function () {
       const user = Auth.getUser();
       let html = '';
       if (Auth.isAdmin()) {
-        html += '<a href="/admin/products" class="text-floral-green hover:text-floral-green-mid transition-colors">後台管理</a>';
+        html += '<a href="/admin/products" class="text-moss hover:text-ink transition-colors">後台管理</a>';
       }
-      html += '<span class="text-floral-text-secondary">' + (user?.name || '') + '</span>';
-      html += '<button onclick="Auth.logout()" class="text-floral-text-muted hover:text-floral-green transition-colors">登出</button>';
+      html += '<span class="text-ink-soft">' + (user?.name || '') + '</span>';
+      html += '<button onclick="Auth.logout()" class="text-ink-soft hover:text-ink transition-colors">登出</button>';
       authNav.innerHTML = html;
     } else {
-      authNav.innerHTML = '<a href="/login" class="hover:text-floral-green transition-colors">登入</a>';
+      authNav.innerHTML = '<a href="/login" class="hover:text-ink transition-colors">登入</a>';
     }
   }
 

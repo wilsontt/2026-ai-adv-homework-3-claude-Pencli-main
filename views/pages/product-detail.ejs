@@ -1,33 +1,21 @@
 <div id="app" data-product-id="<%= productId %>">
 
   <div v-if="loading" class="flex justify-center py-20">
-    <div class="w-8 h-8 border-4 border-floral-green border-t-transparent rounded-full animate-spin"></div>
+    <div class="w-8 h-8 border-4 border-moss border-t-transparent rounded-full animate-spin"></div>
   </div>
 
   <div v-else-if="notFound" class="text-center py-20">
-    <p class="text-[60px] mb-4">🌸</p>
-    <h2 class="font-display text-2xl font-bold text-floral-text mb-2">找不到此商品</h2>
-    <p class="text-floral-text-muted mb-6">該商品可能已下架或不存在</p>
-    <a href="/" class="inline-block bg-floral-green text-white px-8 py-3 rounded hover:bg-floral-green-mid transition-colors font-medium">回到首頁</a>
+    <h2 class="font-serif-tc text-2xl font-bold text-ink mb-2">找不到此商品</h2>
+    <p class="text-ink-soft mb-6">該商品可能已下架或不存在</p>
+    <a href="/" class="stamp-btn">回到首頁</a>
   </div>
 
-  <div v-else-if="product">
-
-    <!-- Breadcrumb -->
-    <nav class="flex items-center gap-2 text-sm text-floral-text-muted mb-8">
-      <a href="/" class="hover:text-floral-green transition-colors">首頁</a>
-      <span class="text-floral-border">/</span>
-      <span class="text-floral-text-secondary">花藝商品</span>
-      <span class="text-floral-border">/</span>
-      <span class="text-floral-text truncate">{{ product.name }}</span>
-    </nav>
-
-    <!-- Main Content -->
-    <div class="flex flex-col lg:flex-row gap-14 items-start pb-20">
+  <div v-else-if="product" class="py-10">
+    <div class="flex flex-col lg:flex-row gap-14 items-start pb-16">
 
       <!-- Left: Image -->
-      <div class="w-full lg:w-[560px] flex-shrink-0">
-        <div class="w-full aspect-square rounded-lg overflow-hidden bg-floral-bg-alt">
+      <div class="w-full lg:w-[480px] flex-shrink-0">
+        <div class="w-full aspect-square bg-paper-deep border border-ink overflow-hidden">
           <img
             :src="product.image_url || 'https://images.unsplash.com/photo-1490750967868-88aa4f44baee?w=800'"
             :alt="product.name"
@@ -37,113 +25,47 @@
       </div>
 
       <!-- Right: Info -->
-      <div class="flex-1 flex flex-col gap-7">
-
-        <!-- Status + Name + Price -->
-        <div class="flex flex-col gap-3">
-          <div>
-            <span v-if="product.stock > 0" class="bg-floral-green-light text-floral-green text-xs font-medium px-2.5 py-1 rounded">現貨供應</span>
-            <span v-else class="bg-red-100 text-red-600 text-xs font-medium px-2.5 py-1 rounded">已售完</span>
-          </div>
-          <h1 class="font-display text-[40px] md:text-[48px] font-bold text-floral-text leading-tight">
-            {{ product.name }}
-          </h1>
-          <div class="flex items-baseline gap-3">
-            <span class="text-[30px] font-bold text-floral-green">NT$ {{ product.price.toLocaleString() }}</span>
-          </div>
-          <p v-if="product.stock > 0" class="text-floral-text-muted text-sm">庫存 {{ product.stock }} 件</p>
+      <div class="flex-1 flex flex-col gap-4">
+        <p class="font-mono-ledger text-[12px] tracking-wide text-ink-soft">{{ 'No.' + String(product.id).padStart(3, '0') + ' · 花藝系列' }}</p>
+        <h1 class="font-serif-tc text-[32px] font-bold text-ink leading-tight">{{ product.name }}</h1>
+        <p class="font-mono-ledger text-[26px] font-bold text-stamp">NT$ {{ product.price.toLocaleString() }}</p>
+        <div>
+          <span v-if="product.stock > 0" class="status-stamp text-moss">尚有 {{ product.stock }} 件</span>
+          <span v-else class="status-stamp text-stamp">已售完</span>
         </div>
 
-        <div class="border-t border-floral-border"></div>
-
-        <!-- Description -->
-        <p class="text-floral-text-secondary text-[15px] leading-[1.8]">{{ product.description }}</p>
+        <p class="text-ink-soft text-[14px] leading-[1.8] mt-1">{{ product.description }}</p>
 
         <!-- Quantity -->
-        <div class="flex flex-col gap-3">
-          <label class="text-sm font-medium text-floral-text-secondary">選擇數量</label>
-          <div class="flex items-center border border-floral-border w-fit">
-            <button
-              @click="decrease"
-              :disabled="quantity <= 1"
-              class="w-10 h-10 flex items-center justify-center hover:bg-floral-bg-alt transition-colors disabled:opacity-40 border-r border-floral-border"
-            >
-              <span class="material-symbols-outlined text-[18px] text-floral-text-secondary">remove</span>
-            </button>
-            <span class="w-14 text-center font-bold text-floral-text text-sm">{{ quantity }}</span>
-            <button
-              @click="increase"
-              :disabled="quantity >= product.stock"
-              class="w-10 h-10 flex items-center justify-center hover:bg-floral-bg-alt transition-colors disabled:opacity-40 border-l border-floral-border"
-            >
-              <span class="material-symbols-outlined text-[18px] text-floral-text-secondary">add</span>
-            </button>
-          </div>
+        <div class="flex items-center gap-0 border border-ink-soft w-[120px] justify-between px-3.5 py-2 mt-2">
+          <button
+            @click="decrease"
+            :disabled="quantity <= 1"
+            class="font-mono-ledger text-lg text-ink disabled:opacity-30"
+          >–</button>
+          <span class="font-mono-ledger text-base text-ink">{{ quantity }}</span>
+          <button
+            @click="increase"
+            :disabled="quantity >= product.stock"
+            class="font-mono-ledger text-lg text-ink disabled:opacity-30"
+          >+</button>
         </div>
 
-        <!-- CTA -->
         <button
           @click="addToCart"
           :disabled="adding || product.stock <= 0"
-          class="w-full bg-floral-green text-white py-4 font-semibold text-[15px] hover:bg-floral-green-mid transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed rounded"
+          class="stamp-btn w-full mt-2"
         >
-          <span class="material-symbols-outlined text-[18px]">shopping_bag</span>
           {{ product.stock <= 0 ? '已售完' : (adding ? '加入中...' : '加入購物車') }}
         </button>
 
-        <div class="border-t border-floral-border"></div>
-
         <!-- Purchase Notes -->
-        <div class="bg-floral-rose-light rounded-lg p-6 flex flex-col gap-3">
-          <ul class="flex flex-col gap-3 text-[14px] text-floral-text-secondary">
-            <li class="flex items-start gap-3">
-              <span class="material-symbols-outlined text-floral-rose mt-0.5" style="font-size:16px;">check_circle</span>
-              <span><strong class="text-floral-text">花材說明：</strong>天然花材受季節影響，若遇缺貨將以同等價值之精選花材替換。</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="material-symbols-outlined text-floral-rose mt-0.5" style="font-size:16px;">local_shipping</span>
-              <span><strong class="text-floral-text">當日配送：</strong>台北、新北地區中午 12:00 前下單，保證當日送達。</span>
-            </li>
-            <li class="flex items-start gap-3">
-              <span class="material-symbols-outlined text-floral-rose mt-0.5" style="font-size:16px;">card_giftcard</span>
-              <span><strong class="text-floral-text">滿額免運：</strong>全館單筆訂單滿 NT$ 500 即享台北市區免運費優惠。</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Delivery Tags -->
-        <div class="flex items-center gap-8 text-sm text-floral-text-muted border-t border-floral-border pt-5">
-          <div class="flex items-center gap-2">
-            <span class="material-symbols-outlined text-floral-green" style="font-size:16px;">local_shipping</span>
-            <span>全台配送</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <span class="material-symbols-outlined text-floral-green" style="font-size:16px;">eco</span>
-            <span>當季鮮花</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Designer Section -->
-    <div class="border-t border-floral-border pt-16 pb-20">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-        <div class="flex flex-col gap-4">
-          <h3 class="font-display text-[28px] font-bold text-floral-text">設計師的心意</h3>
-          <p class="text-floral-text-secondary text-[15px] leading-[1.8]">
-            在花漾生活，我們相信每一束花都有其獨特的靈魂。每一束花均由主理設計師親自搭配，確保比例與留白的完美平衡，讓您在不同光線下感受到色彩的跳躍。
-          </p>
-        </div>
-        <div class="rounded-lg overflow-hidden h-56">
-          <img
-            src="https://images.unsplash.com/photo-1508610048659-a06b669e3321?w=600"
-            alt="花藝師設計"
-            class="w-full h-full object-cover"
-          />
+        <div class="bg-paper-deep p-5 flex flex-col gap-2 mt-3">
+          <p class="text-ink-soft text-[12px]">· 花材依季節略有差異，以實際到貨為準</p>
+          <p class="text-ink-soft text-[12px]">· 台北市區當日配送，其他地區 1-3 個工作天</p>
+          <p class="text-ink-soft text-[12px]">· 消費滿 NT$500 免運</p>
         </div>
       </div>
     </div>
-
   </div>
 </div>
