@@ -249,3 +249,14 @@ curl -s -X PATCH "http://localhost:3001/api/orders/{orderId}/pay" \
 | `Target page, context or browser has been closed` | 通常是對已關閉的 Mock 分頁做後續操作；改用 `waitForEvent('close')` 等待分頁關閉後再操作主分頁 |
 | 回站後未顯示「已付款」/「付款成功」 | 先確認 `POST /api/orders/:id/payment/query` 是否成功；若回傳 `fetch failed`/`ENOTFOUND`，代表 server 行程網路受限，需以完整網路權限重啟 `npm run dev:server` |
 | 任何其他未預期錯誤 | 截圖存查，切換 Plan Mode 與使用者討論 |
+
+---
+
+## 版本紀錄
+
+| 日期 | UI 版本 | 執行結果 | 截圖存放位置 |
+|------|---------|----------|--------------|
+| 2026-07-26 | 前台重設計前（Vue SPA 舊版樣式） | 三支腳本皆 passed | `e2e/pencil-v1/`（含完整流程錄影） |
+| 2026-07-26 | 前台重設計後（Pencil 設計稿落地 EJS + TailwindCSS，8 頁面 + 共用元件） | 三支腳本皆 passed，選擇器**無需修改**即相容新版樣式（`加入購物車`／`前往結帳`／`確認送出訂單`／`前往付款` 等文字與 `input[type=email/password]`、`button[type=submit]` 結構維持不變） | `e2e/pencil-v2/` |
+
+重設計後複測重點：確認 Vue 掛載邏輯（`#app` + `v-model`/`@click`）與按鈕文字未受樣式重構影響；若未來再次改版導致選擇器失效，優先檢查對應 `views/pages/*.ejs` 的按鈕文字與 `input`/`button` 屬性是否變更，而非重寫整套腳本。
