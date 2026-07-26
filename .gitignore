@@ -3,19 +3,11 @@
 .DS_Store
 Thumbs.db
 
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-
 # Environment variables
 env/
 venv/
 .venv/
 .env
-.env.example
 .vscode
  
 # Node.js
