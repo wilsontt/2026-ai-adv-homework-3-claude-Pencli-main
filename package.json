@@ -22,6 +22,7 @@
     "uuid": "^11.1.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.62.0",
     "@tailwindcss/cli": "^4.2.2",
     "supertest": "^7.2.2",
     "tailwindcss": "^4.2.2",
