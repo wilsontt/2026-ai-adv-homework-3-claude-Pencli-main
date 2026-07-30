@@ -11,7 +11,7 @@ venv/
 .vscode
  
 # Node.js
-node_modules/
+node_modules
 npm-debug.log
 yarn-error.log
 dist/
@@ -21,6 +21,7 @@ build/
 # Database
 *.db
 *.sqlite3
+*.sqlite
 
 # IDE
 .vscode/
@@ -46,6 +47,8 @@ temp/
 ~$*.doc
 ~WRL*.tmp
 
+# Video files
 *.mov
 *.mp4
 
+*.png
